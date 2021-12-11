@@ -12,9 +12,11 @@ let x = 0;
 let z = 0;
 let categorieTitle;
 let categorieList;
+
 /*============
   EVENT-LIST
 =============*/
+
 createCategorie.addEventListener("click", newCategorie);
 buttonTitle.addEventListener("click", addCategorieTitle);
 buttonTitle.addEventListener("click", doneAndRemove);
