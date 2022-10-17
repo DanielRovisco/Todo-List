@@ -1,168 +1,155 @@
-//Variaveis
 /*============
   VARIABLES
 =============*/
-const createCategorie = document.querySelector(".create-categorie"); //Create a new categorie text
-const createTask = document.querySelector(".create-task"); //Create a new task text
-const categorieContainer = document.querySelector(".categories-container"); //Categories Container
-const buttonTitle = document.querySelector("body"); //Body
-const categorieParagrafTitle = document.getElementsByClassName("title"); //Categories Title
+const createTaskBtn = document.querySelector(".create")
+const tasksWrap = document.querySelector(".taskWrap")
+const inboxWrap = document.querySelector(".inboxDisplay")
+const upperText = document.querySelector(".upperText")
+const sideNav = document.querySelector(".sidenav")
+const allTasks = document.querySelectorAll(".task")
+
 let i = 0;
-let x = 0;
-let z = 0;
-let categorieTitle;
-let categorieList;
 
 /*============
   EVENT-LIST
 =============*/
-
-createCategorie.addEventListener("click", newCategorie);
-buttonTitle.addEventListener("click", addCategorieTitle);
-buttonTitle.addEventListener("click", doneAndRemove);
-buttonTitle.addEventListener("click", addTask);
-buttonTitle.addEventListener("click", removeCategorie);
+createTaskBtn.addEventListener("click", createTaskFunction);
+document.addEventListener("keydown", enterTaskName);
+document.addEventListener("click", addAndRemoveTask);
+sideNav.addEventListener("click", selectPage);
 /*============
   FUNCTIONS
 =============*/
 
-if (categorieContainer.childElementCount === 0) {
-  createCategorie.classList.add("pulse");
-}
+function createTaskFunction() {
+  const newTask = document.createElement("div");
+  newTask.classList.add("task");
+  tasksWrap.appendChild(newTask); //Create and append the task to the task wrap
 
-//FUNCTION TO CREATE A CATEGORIE
+  const taskInput = document.createElement("input");
+  taskInput.classList.add("taskname")
+  taskInput.setAttribute("type", "text");
+  taskInput.setAttribute("placeHolder", "Task");
+  newTask.appendChild(taskInput); //Add the task input to the task
 
-function newCategorie() {
-  const newCategorie = document.createElement("div"); //Create Categorie DIV
-  newCategorie.classList.add("categorie");
-  newCategorie.classList.add(`${i++}`);
-  categorieContainer.append(newCategorie);
+  const doneBtn = document.createElement("i");
+  doneBtn.classList.add("fa-circle-check");
+  doneBtn.classList.add("fa-regular");
+  newTask.appendChild(doneBtn); //Add the done button to the task
 
-  let categorieTitle = document.createElement("div"); //Create Categorie Title DIV
-  categorieTitle.classList.add("categorie-title");
-  categorieTitle.innerHTML = `<form>
-  <input class="input-title ${z++}" placeholder="Give me a name!" />
-  <button class="button-title ${x++}" type="submit"></button> </form> <i class="fas fa-ban"></i>`;
-  newCategorie.append(categorieTitle);
+  const removeBtn = document.createElement("i");  
+  removeBtn.classList.add("fa-ban");
+  removeBtn.classList.add("fa-solid");
+  newTask.appendChild(removeBtn); //Add the remove button to the task
 
-  const categorieList = document.createElement("div"); //Create Categorie List DIV
-  categorieList.classList.add("categorie-list");
-  newCategorie.append(categorieList);
+  i++; //Increment the number of tasks existing in the list
+ 
+  
+} //Button to create the task
 
-  const form = document.createElement("form"); //Create Input Form
-  form.classList.add("input-form");
-  categorieList.append(form);
-  form.innerHTML = `<input type="text" class="input" placeholder="ADD" /><button type="submit" class="addBtn"><i class="far fa-plus-square"></i></button>`;
+function enterTaskName(e){
 
-  if (categorieContainer.childElementCount > 0) {
-    createCategorie.classList.remove("pulse");
-  }
-}
-
-//FUNCTION TO ADD CATEGORIE TITLE
-function addCategorieTitle(e) {
-  const form = e.target.parentNode;
-  const title = form.parentNode;
-  const input = form.children[0];
-  const inputNr = input.classList[1];
-  const buttonNr = e.target.classList[1];
-  const categorieNr = title.parentNode.classList[1];
-  e.preventDefault();
-  const inputValue = input.value;
-
-  if (
-    inputNr === buttonNr &&
-    buttonNr === categorieNr &&
-    e.target.classList[0] === "button-title"
-  ) {
-    title.innerHTML = `<p class="title">${inputValue}</p> <i class="fas fa-ban"></i>`;
-  }
-}
-
-//FUNCTION TO MARK COMPLETE OR DELETE
-function doneAndRemove(e) {
-  const className = e.target.classList[1];
-  const iconsDiv = e.target.parentNode;
-  const todo = iconsDiv.previousElementSibling;
-  const iconMinus = iconsDiv.children[0];
-  const iconDone = iconsDiv.children[1];
-  const todoContainer = iconsDiv.parentNode;
-
-  if (className === "fa-check-square") {
-    todo.classList.toggle("done");
-    iconDone.classList.toggle("checked");
-    iconMinus.classList.toggle("checked");
+  if (13 === e.keyCode && (e.target.classList.contains("taskname"))){ //if the user presses enter and its input 
+    const taskNameP = document.createElement("p"); //Create Paragraph element
+    const inputText = e.target.value; //Gets the text of the input element
+    const fullTask = e.target.parentNode; //Gets the fullTask 
+    // Enter is pressed
+    e.target.remove() //The input element is removed
+    taskNameP.innerHTML = inputText; //Atributes the text of the input element to the paragraph
+    console.log(fullTask); 
+    fullTask.prepend(taskNameP)
   }
 
-  if (className === "fa-minus-square") {
-    todoContainer.classList.add("removed");
-    iconDone.classList.toggle("checked");
-    iconMinus.classList.toggle("checked");
-    addEventListener("animationend", function (e) {
-      todoContainer.remove();
-    });
+} //To get the name into the task
+
+function addAndRemoveTask(e){
+  const paragraph = e.target.parentNode.childNodes[0];
+  const checkBtn = e.target.parentNode.childNodes[3];
+  const deleteBtn = e.target.parentNode.childNodes[5];
+  const task = paragraph.parentNode;
+
+  //If its the Done Button
+  if (e.target.classList.contains("fa-circle-check")){
+
+    paragraph.classList.toggle("completed");
+    
   }
-}
 
-//FUNCTION TO ADD A TASK
 
-function addTask(e) {
-  e.preventDefault;
-  const input = e.target.previousElementSibling;
-  const inputForm = input.parentNode;
-  const categorieList = inputForm.parentNode;
-  const titleDiv = categorieList.previousElementSibling;
-  const title = titleDiv.children[0].innerText;
-
-  if (e.target.classList[0] === "addBtn") {
-    const todoContainer = document.createElement("div");
-    todoContainer.classList.add("todo-container");
-    categorieList.append(todoContainer);
-
-    const text = document.createElement("p");
-    text.classList.add("todo-text");
-    todoContainer.append(text);
-
-    const iconContainer = document.createElement("div");
-    iconContainer.classList.add("todo-icons");
-    todoContainer.append(iconContainer);
-
-    text.innerText = input.value;
-    iconContainer.innerHTML = ` <i class="far fa-minus-square"></i><i class="far fa-check-square"></i>`;
-    inputForm.remove();
-
-    const form = document.createElement("form"); //Create Input Form
-    form.classList.add("input-form");
-    categorieList.append(form);
-    form.innerHTML = `<input type="text" class="input" placeholder="ADD" /><button type="submit" class="addBtn"><i class="far fa-plus-square"></i></button>`;
-  }
-}
-
-//FUNCTION TO REMOVE A CATEGORIE
-function removeCategorie(e) {
-  const titleContainer = e.target.parentNode;
-  const categorieContainer = titleContainer.parentNode;
-
-  if (e.target.classList[1] === "fa-ban") {
-    categorieContainer.classList.add("removeCategorie");
-    addEventListener("animationend", function (e) {
-      categorieContainer.remove();
-    });
-
-    function createPulse() {
-      const categorieContainerPulse = document.querySelector(
-        ".categories-container"
-      );
-
-      const nrOfCategories = categorieContainerPulse.childElementCount - 1;
-
-      if (nrOfCategories === 0) {
-        createCategorie.classList.add("pulse");
-      }
+  //If its the Remove Button
+  if (e.target.classList.contains("fa-ban")){
+    task.classList.add("removed");
+    task.addEventListener("transitionend", deleteFunction)
+    function deleteFunction(){
+      task.remove()
     }
 
-    createPulse();
+    i--
   }
-}
+} //Done and remove function
 
-//ADDING TO THE LOCAL STORAGE
+function selectPage(e){
+  const item = e.target;
+  const itemName = item.childNodes[2].innerHTML;
+  upperText.innerHTML = itemName; //Changing the name
+
+
+  //If its the Inbox
+  if(upperText.innerHTML === "Inbox"){
+    tasksWrap.style.display = "none";
+    inboxWrap.style.display = "flex";
+    createTaskBtn.style.opacity =0;
+
+    
+  };
+
+  //If its the Tasks
+  if(upperText.innerHTML === "Tasks"){
+    tasksWrap.style.display = "flex";
+    inboxWrap.style.display = "none";
+    createTaskBtn.style.opacity =1;
+
+    const numberOfTasks = tasksWrap.childElementCount;
+    const task = tasksWrap.children
+
+    for (let i = 0; i < numberOfTasks; i++) {
+
+      let x = 1;
+      if (task[i].firstChild.classList.contains("completed")) {
+        task[i].style.display = "flex";
+      } else{
+        task[i].style.display = "flex";
+
+      }
+    }
+  };
+
+  //If its the Completed 
+  if(upperText.innerHTML === "Completed"){
+    const numberOfTasks = tasksWrap.childElementCount + 1;
+    const task = tasksWrap.children
+    const taskName = task.firstChild
+    tasksWrap.style.display = "flex";
+    inboxWrap.style.display = "none";
+    
+    
+    for (let i = 0; i = numberOfTasks; i++) {
+      console.log(i)
+      const paragraph = task[i].childNodes[0];
+
+      console.log(numberOfTasks)
+      console.log(i)
+      console.log(paragraph);
+
+      if (paragraph.classList.contains("completed")) {
+        task[i].style.display = "none";
+      } 
+      
+      
+    }//Show if its done
+    
+    
+  }
+  
+  //Select the page and change content 
+}

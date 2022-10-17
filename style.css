@@ -1,0 +1,191 @@
+* {
+  transition: all 0.3s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.upNav {
+  display: flex;
+  align-content: center;
+  width: 100vw;
+  height: 8vh;
+  box-shadow: -1px 4px 20px 0px rgb(158, 158, 158);
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.5rem;
+}
+.upNav .fa-circle-check {
+  font-size: 2rem;
+  color: rgb(36, 188, 36);
+}
+.upNav .searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upNav .searchbar i {
+  padding-left: 4px;
+  z-index: 3;
+  position: relative;
+  left: -165px;
+  color: rgba(111, 111, 111, 0.508);
+}
+.upNav .searchbar input {
+  position: absolute;
+  width: 20rem;
+  border: 1px solid rgb(36, 188, 36);
+  border-radius: 20px;
+  padding: 0.5rem;
+  outline: none;
+  padding-left: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+.upNav .create {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-right: 3rem;
+  cursor: pointer;
+}
+.upNav .create:hover > i {
+  transition: all 0.2s ease;
+  transform: rotate(-180deg);
+}
+.upNav .create i {
+  color: rgb(36, 188, 36);
+  font-size: 2rem;
+}
+.upNav .create p {
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+.main {
+  width: 100vw;
+  display: flex;
+  height: 91vh;
+}
+.main .sidenav {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+  height: 100vw;
+  display: flex;
+  align-items: flex-start;
+  width: 15vw;
+  box-shadow: -1px 4px 20px 0px rgb(158, 158, 158);
+}
+.main .sidenav .item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  cursor: pointer;
+}
+.main .sidenav .item:hover > i {
+  text-shadow: 0px 1px 10px blue;
+  transition: all 0.2s ease;
+}
+.main .sidenav .item i {
+  font-size: 1.5rem;
+  color: rgb(82, 82, 255);
+  pointer-events: none;
+}
+.main .sidenav .item p {
+  font-family: "roboto", "sans-serif";
+  font-weight: 500;
+  pointer-events: none;
+}
+.main .content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.main .content p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  margin: 0;
+  padding-left: 2rem;
+  color: rgb(82, 82, 255);
+}
+.main .content .taskWrap {
+  display: flex;
+  flex-direction: column;
+  height: 94%;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.main .content .taskWrap .task {
+  display: flex;
+  align-items: center;
+  box-shadow: -1px 4px 20px 0px rgb(203, 203, 203);
+  padding: 1rem;
+  min-width: 18rem;
+  width: 18rem;
+  max-width: 30rem;
+  justify-content: space-evenly;
+  border-radius: 25px;
+}
+.main .content .taskWrap .task p {
+  font-family: "roboto", "sans-serif";
+  font-weight: 300;
+  font-size: 1rem;
+  color: black;
+  width: 40%;
+  padding: 0;
+}
+.main .content .taskWrap .task i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: rgb(131, 131, 131);
+}
+.main .content .taskWrap .task .fa-circle-check:hover {
+  color: rgb(36, 188, 36);
+  transition: all 0.2s ease;
+  transform: scale(1.15);
+}
+.main .content .taskWrap .task .fa-ban:hover {
+  color: rgb(188, 36, 36);
+  transition: all 0.2s ease;
+  transform: rotate(180deg);
+}
+.main .content .taskWrap .task input {
+  outline: none;
+  border: none;
+  box-shadow: -1px 4px 20px 0px rgb(219, 219, 219);
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+.main .content .taskWrap .completed {
+  color: grey;
+  text-decoration: line-through;
+  opacity: 95%;
+}
+.main .content .taskWrap .removed {
+  transform: translate(150px);
+}
+.main .content .inboxDisplay {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 94%;
+  width: 100%;
+}
+.main .content .inboxDisplay p {
+  font-family: "roboto", "sans-serif";
+  font-weight: 500;
+  font-size: 4rem;
+  color: grey;
+}/*# sourceMappingURL=style.css.map */
